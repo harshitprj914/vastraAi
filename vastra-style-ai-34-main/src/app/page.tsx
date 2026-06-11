@@ -12,7 +12,13 @@ export default function Landing() {
   const router = useRouter();
 
   useEffect(() => {
+    
+    console.log("loading =", loading);
+    console.log("user =", user);
+
     if (!loading && user) {
+
+      console.log("REDIRECT TO MODE");
       router.replace("/mode");
     }
   }, [user, loading, router]);
