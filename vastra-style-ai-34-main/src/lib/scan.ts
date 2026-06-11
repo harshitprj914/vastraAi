@@ -8,7 +8,9 @@ export type ScanVerdict = {
   recommendations_context?: string;
 };
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "") ?? "";
+const API_BASE_URL =
+  (process.env.NEXT_PUBLIC_API_BASE_URL ||
+    "https://vastraai-4.onrender.com").replace(/\/$/, "");
 
 function apiPath(path: string) {
   return API_BASE_URL ? `${API_BASE_URL}${path}` : `/api${path}`;

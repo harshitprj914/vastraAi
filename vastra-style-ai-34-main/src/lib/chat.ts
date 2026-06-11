@@ -2,7 +2,7 @@ export async function sendChatMessage(messages: any[], profile: any) {
   const message = messages[messages.length - 1]?.content;
 
   const response = await fetch(
-    "http://127.0.0.1:8000/chat",
+    "https://vastraai-4.onrender.com/chat",
     {
       method: "POST",
       headers: {
