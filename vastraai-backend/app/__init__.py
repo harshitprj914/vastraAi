@@ -1,1 +1,0 @@
-"""VastraAI backend application package."""
