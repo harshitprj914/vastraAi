@@ -22,19 +22,39 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isGuest, setIsGuest] = useState(false);
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, s) => {
-      setSession(s);
-      setUser(s?.user ?? null);
-      if (s?.user) setIsGuest(false);
-    });
-    supabase.auth.getSession().then(({ data: { session: s } }) => {
-      setSession(s);
-      setUser(s?.user ?? null);
-      if (typeof window !== "undefined" && localStorage.getItem("vastra:guest") === "1") setIsGuest(true);
-      setLoading(false);
-    });
-    return () => subscription.unsubscribe();
-  }, []);
+  const {
+    data: { subscription },
+  } = supabase.auth.onAuthStateChange((_event, s) => {
+    console.log("AUTH EVENT:", _event, s);
+
+    setSession(s);
+    setUser(s?.user ?? null);
+
+    if (s?.user) {
+      setIsGuest(false);
+    }
+
+    setLoading(false);
+  });
+
+  supabase.auth.getSession().then(({ data: { session: s } }) => {
+    console.log("INITIAL SESSION:", s);
+
+    setSession(s);
+    setUser(s?.user ?? null);
+
+    if (
+      typeof window !== "undefined" &&
+      localStorage.getItem("vastra:guest") === "1"
+    ) {
+      setIsGuest(true);
+    }
+
+    setLoading(false);
+  });
+
+  return () => subscription.unsubscribe();
+}, []);
 
   const value: AuthCtx = {
     user, session, loading, isGuest,
