@@ -3,9 +3,26 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, Wand2, Camera, Shirt } from "lucide-react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/lib/auth";
 
 export default function Landing() {
+  const { user, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && user) {
+      router.replace("/mode");
+    }
+  }, [user, loading, router]);
+
+  if (!loading && user) {
+    return null;
+  }
+
   return (
+    //  EXISTING JSX 
     <div className="min-h-screen bg-background overflow-x-hidden">
       {/* Nav */}
       <header className="fixed top-0 inset-x-0 z-30 glass border-b">

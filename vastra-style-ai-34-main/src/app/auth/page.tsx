@@ -43,7 +43,9 @@ function AuthContent() {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
-        options: { redirectTo: window.location.origin },
+        options: {
+          redirectTo: `${window.location.origin}/mode`,
+        },
       });
       if (error) toast.error(error.message ?? "Google sign-in failed");
     } finally { setBusy(false); }
